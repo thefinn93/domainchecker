@@ -21,10 +21,12 @@ for subnet in sys.argv[1:]:
             print "%s,%s" % (addr, ptr(str(addr)))
             diffs.append(time.time()-starttime)
         except dns.resolver.NXDOMAIN, dns.resolver.NoNameservers:
-            continue
+            pass
 
         totalreqs += 1
         if (totalreqs % 10) == 0:
-            avg = (sum(diffs)/len(diffs))
+            avg = "N/A"
+            if len(diffs) > 0:
+                avg = (sum(diffs)/len(diffs))
             total = time.time() - totalstart
-            sys.stderr.write("Average: %s\tTotal: %s\tRequests: %i\n" % (avg, total, totalreqs))
+            sys.stderr.write("Average: %s\tTotal: %s\tRequests: %i (at %s)\n" % (avg, total, totalreqs, addr))
