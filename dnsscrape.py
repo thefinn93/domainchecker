@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-
-import dns.resolver, dns.reversename
+import dns.resolver, dns.reversename, dns.exception
 import netaddr
 import time
 
@@ -20,7 +19,7 @@ for subnet in sys.argv[1:]:
         try:
             print "%s,%s" % (addr, ptr(str(addr)))
             diffs.append(time.time()-starttime)
-        except dns.resolver.NXDOMAIN, dns.resolver.NoNameservers:
+        except dns.exception.DNSException:
             pass
 
         totalreqs += 1
