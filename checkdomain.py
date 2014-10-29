@@ -15,8 +15,6 @@ if len(sys.argv) == 1:
 
 domain = sys.argv[1]
 
-logging.debug("Preparing to import from %s" % modulesFolder)
-
 sys.path.append(modulesFolder)
 
 modules = []
@@ -24,17 +22,14 @@ modules = []
 for module in os.listdir(modulesFolder):
     if module.endswith('.py'):
         try:
-            logging.debug("Importing %s" % module)
             modules.append(__import__(module[:-3]).Module())
         except ImportError as e:
-            logging.error("Failed to load %s" % module)
             logging.error(e)
 
 score = 0
 results = []
 for module in modules:
     try:
-        logging.debug("Executing %s" % module.name)
         result = module.check(domain)
         score += result['score']
         results.append((module.name, result['score'], result['reason']))
