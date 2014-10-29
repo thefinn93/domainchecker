@@ -30,18 +30,29 @@ for module in os.listdir(modulesFolder):
             logging.error("Failed to load %s" % module)
             logging.error(e)
 
-
 score = 0
+results = []
 for module in modules:
     try:
         logging.debug("Executing %s" % module.name)
         result = module.check(domain)
         score += result['score']
-        print("%s:\t%s\t(%s)" % (module.name, result['score'], result['reason']))
+        results.append((module.name, result['score'], result['reason']))
     except Exception as e:
         try:
             logging.exception("Failed to run module %s" % module.name)
         except:
             logging.exception("Failed to run module")
 
-logging.info("Total: %i" % score)
+outputmode = "text"
+
+if outputmode == "md":
+    print("Check | Score | Comment")
+    print("------|-------|--------")
+    for module in results:
+        print("%s | %s | %s" % module)
+    print("**Total** | **%s** |" % score)
+else:
+    from tabulate import tabulate
+    print(tabulate(results, ['Check', 'Score', 'Comment']))
+    print("Total: %s" % score)
