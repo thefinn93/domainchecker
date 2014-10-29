@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-import logging
+#!/usr/bin/env python3
 
 # TODO: Deal with non-standard imports for a plugin, ie. by allowing them to
 # be ignored but give a revelant error message, such as what needs installing
@@ -19,8 +18,8 @@ class Module(object):
         }
 
     def check(self, domain):
-        import whois
         """Looks up the whois info for the domain in question and attempts to extract the registrar"""
+        import whois
         score = 0
         reason = "Registrar could not be determined"
 
