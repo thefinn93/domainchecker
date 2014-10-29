@@ -6,7 +6,7 @@ import logging
 modulesFolder = "modules/"
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig()
 
 if len(sys.argv) == 1:
     print "Usage: %s <domain>" % sys.argv[0]
@@ -47,6 +47,9 @@ for module in modules:
         score += result['score']
         print "%s:\t%s\t(%s)" % (module.name, result['score'], result['reason'])
     except Exception as e:
-        logging.exception("Failed to run module")
+        try:
+            logging.exception("Failed to run module %s" % module.name)
+        except:
+            logging.exception("Failed to run module")
 
 logging.info("Total: %i" % score)
