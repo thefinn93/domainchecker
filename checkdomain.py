@@ -41,9 +41,12 @@ for module in os.listdir(modulesFolder):
 
 score = 0
 for module in modules:
-    logging.debug("Executing %s" % module.name)
-    result = module.check(domain)
-    score += result['score']
-    logging.info("%s: %s (%s)" % (module.name, result['score'], result['reason']))
+    try:
+        logging.debug("Executing %s" % module.name)
+        result = module.check(domain)
+        score += result['score']
+        print "%s:\t%s\t(%s)" % (module.name, result['score'], result['reason'])
+    except Exception as e:
+        logging.exception("Failed to run module")
 
 logging.info("Total: %i" % score)
