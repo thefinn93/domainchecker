@@ -9,19 +9,11 @@ modulesFolder = "modules/"
 logging.basicConfig()
 
 if len(sys.argv) == 1:
-    print "Usage: %s <domain>" % sys.argv[0]
-    print "\nfor example, %s finn.io" % sys.argv[0]
+    print("Usage: %s <domain>" % sys.argv[0])
+    print("\nfor example, %s finn.io" % sys.argv[0])
     sys.exit(1)
 
 domain = sys.argv[1]
-
-"""
-try:
-    import whois
-except ImportError:
-    print "Failed to import a module. Please install everything from requirements.txt"
-    sys.exit(1)
-"""
 
 logging.debug("Preparing to import from %s" % modulesFolder)
 
@@ -45,7 +37,7 @@ for module in modules:
         logging.debug("Executing %s" % module.name)
         result = module.check(domain)
         score += result['score']
-        print "%s:\t%s\t(%s)" % (module.name, result['score'], result['reason'])
+        print("%s:\t%s\t(%s)" % (module.name, result['score'], result['reason']))
     except Exception as e:
         try:
             logging.exception("Failed to run module %s" % module.name)
