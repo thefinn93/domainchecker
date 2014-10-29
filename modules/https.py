@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-import logging
+#!/usr/bin/env python3
 
 class Module(object):
     def __init__(self):
@@ -18,12 +17,12 @@ class Module(object):
         score = 0
         reason = ""
         try:
-            result = requests.get("https://%s" % domain, timeout = 5)
+            requests.get("https://%s" % domain, timeout = 5)
             score = 1
             reason = "HTTPS supported"
         except requests.exceptions.ConnectionError:
             try:
-                result = requests.get("https://www.%s" % domain, timeout = 5)
+                requests.get("https://www.%s" % domain, timeout = 5)
                 score = 1
                 reason = "No HTTPS support on the naked domain (%s), but www.%s appears to have it" % (domain, domain)
             except requests.exceptions.ConnectionError:
