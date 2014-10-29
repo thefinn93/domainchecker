@@ -12,16 +12,13 @@ class Module(object):
         }
 
     def check(self, domain):
-        import dns.resolver
+        import socket
         score = 0
-        reason = ""
-        try:
-            results = dns.resolver.query(domain, 'AAAA')
-            score = 1
-            reason = "IPv6 supported"
-        except dns.resolver.NoAnswer:
-            score = 0
-            reason = "IPv6 not supported"
+        reason = "IPv6 not supported"
+        for address in socket.getaddrinfo(domain, 80):
+            if address[0] == socket.AF_INET6:
+                score = 1
+                reason = "IPv6 supported"
         return {
             "score": score,
             "reason": reason
