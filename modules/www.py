@@ -13,7 +13,7 @@ class Module(object):
 
     def check(self, domain):
         import requests
-        from urlparse import urlparse
+        from urllib.parse import urlparse
 
         score = 0
         reason = ""
