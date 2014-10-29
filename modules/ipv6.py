@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-import logging
+#!/usr/bin/env python3
 
 class Module(object):
     def __init__(self):
